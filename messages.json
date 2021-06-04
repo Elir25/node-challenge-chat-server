@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "from": "Mat",
+        "text": "Welcome to CYF chat system!"
+    },
+    {
+        "id": 2,
+        "from": "Tom",
+        "text": "Welcome to CYF chat system from tom!"
+    },
+    {
+        "id": 3,
+        "from": "Ana",
+        "text": "Welcome to CYF chat system from Ana!"
+    }
+]
