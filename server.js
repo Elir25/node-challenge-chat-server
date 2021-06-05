@@ -58,16 +58,18 @@ app.get("/messages/:id", function (request, response) {
   
 });
 
-/**------------ read a message given an ID------------------------ */
+/**------------ EDIT a message given an ID------------------------ */
+
 app.put("/messages/:id", function (request, response) {
   response.setHeader("Content-Type", "application/json")
-
+  //find the index of the message and add an error if the id is not available
   const messageIndex = messagesArr.findIndex(item => item.id == request.params.id)
   if(messageIndex == -1){
     return response.send(JSON.stringify({error: "message not found"}));
   }
+
   const messageToUpdate = messagesArr[messageIndex]
-  // messageUpdated = {...messageToUpdate, ...request.body}
+  
   messageToUpdate.text = request.body.text
   messageToUpdate.from = request.body.from
 
@@ -75,6 +77,22 @@ app.put("/messages/:id", function (request, response) {
   messagesArr.splice(messageIndex, 1, messageToUpdate)
   response.send(JSON.stringify(messageToUpdate));
 });
+
+/**------------ DELETE a message given an ID------------------------ */
+app.delete('/messages/:id', function(request, response){
+  response.setHeader("Content-Type", "application/json")
+
+  //using the for loop to find the index of the element i want to delete
+  //add a condition to compare that with the param the user use
+  //use the splice method to find the index and the number of elements i want to delete
+  for (let i = 0; i < messagesArr.length; i ++) {
+   if (messagesArr[i].id == parseInt(request.params.id)) {
+    messagesArr.splice(i, 1)
+   }
+  }
+response.send()
+  
+})
 
 app.listen(3000, () => {
    console.log("Listening on port 3000")
