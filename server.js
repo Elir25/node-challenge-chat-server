@@ -31,7 +31,7 @@ app.get("/messages", function (request, response) {
   response.json(messagesArr)
 });
 
-/**------------ Post a messages ------------------------ */
+/**------------ Post a message ------------------------ */
 
 app.post("/messages", function (request, response) {
   
@@ -45,8 +45,20 @@ app.post("/messages", function (request, response) {
   messagesArr.push(newMessage);
 
   response.send(newMessage);
+  console.log(messagesArr.length)
+});
+/**------------ read a message given an ID------------------------ */
+
+app.get("/messages/:id", function (request, response) {
+  response.setHeader("Content-Type", "application/json")
+  messageId = messagesArr.find(item => item.id == request.params.id);
+  if (messageId) {
+    response.send(JSON.stringify(messageId));
+  } else response.send(JSON.stringify({error: "message not found"}));
+  
 });
 
+/**------------ read a message given an ID------------------------ */
 
 
 app.listen(3000, () => {
