@@ -8,7 +8,7 @@ app.use(cors());
 
 app.use(express.json())
 //created a new json file which contains some messages
-const messagesArr = require('./messages.json');
+let messagesArr = require('./messages.json');
 
 const welcomeMessage = {
   id: 0,
@@ -59,7 +59,22 @@ app.get("/messages/:id", function (request, response) {
 });
 
 /**------------ read a message given an ID------------------------ */
+app.put("/messages/:id", function (request, response) {
+  response.setHeader("Content-Type", "application/json")
 
+  const messageIndex = messagesArr.findIndex(item => item.id == request.params.id)
+  if(messageIndex == -1){
+    return response.send(JSON.stringify({error: "message not found"}));
+  }
+  const messageToUpdate = messagesArr[messageIndex]
+  // messageUpdated = {...messageToUpdate, ...request.body}
+  messageToUpdate.text = request.body.text
+  messageToUpdate.from = request.body.from
+
+  console.log(`messageInex: ${messageIndex} || messageToUpdate: ${messageToUpdate}`)
+  messagesArr = messagesArr.splice(messageIndex, 1, messageToUpdate)
+  response.send(JSON.stringify(messageToUpdate));
+});
 
 app.listen(3000, () => {
    console.log("Listening on port 3000")
