@@ -71,8 +71,8 @@ app.put("/messages/:id", function (request, response) {
   messageToUpdate.text = request.body.text
   messageToUpdate.from = request.body.from
 
-  console.log(`messageInex: ${messageIndex} || messageToUpdate: ${messageToUpdate}`)
-  messagesArr = messagesArr.splice(messageIndex, 1, messageToUpdate)
+  console.log(`messageIndex: ${messageIndex} || messageToUpdate: ${messageToUpdate}`)
+  messagesArr.splice(messageIndex, 1, messageToUpdate)
   response.send(JSON.stringify(messageToUpdate));
 });
 
