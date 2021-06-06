@@ -36,7 +36,14 @@ app.get("/messages", function (request, response) {
 app.post("/messages", function (request, response) {
   
   const body = request.body;
-  
+
+  if (!body.from) {
+    response.status(400).send({ error: "from field must have a name", code: 1});
+  } 
+  if (!body.text) {
+    response.status(400).send({ error: "text field must have some text"});
+  }
+
   const newMessage = {
     id: messagesArr.length + 1,
     from: body.from,
@@ -45,7 +52,7 @@ app.post("/messages", function (request, response) {
   messagesArr.push(newMessage);
 
   response.send(newMessage);
-  console.log(messagesArr.length)
+  console.log(`The length of the array is: ${messagesArr.length}`)
 });
 /**------------ read a message given an ID------------------------ */
 
